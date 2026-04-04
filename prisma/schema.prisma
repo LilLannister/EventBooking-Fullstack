@@ -1,0 +1,63 @@
+// Prisma Client will be generated to interact with the database
+generator client {
+  provider = "prisma-client-js"
+} //ChatGPT
+
+// SQLite is used as the database
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+} //ChatGPT
+
+model User {
+  id           String    @id @default(cuid()) // cuid() creates a unique id automatically
+  name         String
+  email        String    @unique
+  passwordHash String
+  role         String
+  createdAt    DateTime  @default(now())
+  events       Event[]      // One user can be related to many events. this is the one-to-many side between user and event
+  bookings     Booking[]    // One user can have many bookings. this is the one-to-many side between user and booking
+}
+
+model Category {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  events Event[]            // One category can contain many events. this is the one-to-many side between category and event
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  eventDate   DateTime
+  capacity    Int
+  createdAt   DateTime  @default(now()) //now() for taking exact time
+  updatedAt   DateTime  @updatedAt
+  organiserId String
+  categoryId  String
+  organiser   User      @relation(fields: [organiserId], references: [id])  // defines the relation between Event and User
+    // fields: [organiserId] means event uses organiserId as the foreign key. references: [id] means organiserId points to User.id. so, each event belongs to one organiser
+  category    Category  @relation(fields: [categoryId], references: [id])   // defines the relation between Event and Category
+    // fields: [categoryId] means Event uses categoryId as the foreign key. references: [id] means categoryId points to Category.id. so, each event belongs to one category
+  bookings    Booking[]
+}
+
+model Booking {
+  id       String   @id @default(cuid())
+  status   String   @default("CONFIRMED")
+  bookedAt DateTime @default(now())
+  userId   String
+  eventId  String
+  user     User     @relation(fields: [userId], references: [id]) // Defines the relation between Booking and User
+    // fields: [userId] means Booking uses userId as the foreign key. references: [id] means userId points to User.id. so, each booking belongs to one user
+  event    Event    @relation(fields: [eventId], references: [id])
+    // Defines the relation between Booking and Event
+    // fields: [eventId] means Booking uses eventId as the foreign key
+    // references: [id] means eventId points to Event.id
+    // So, each booking belongs to one event
+
+
+  @@unique([userId, eventId])
+  // Composite unique constraint. Prevents the same user from booking the same event more than once
+}
