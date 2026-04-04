@@ -93,4 +93,9 @@ http://localhost:3000
 - 403 Forbidden  
 - 404 Not Found  
 - 409 Conflict  
-- 500 Internal Server Error  
+- 500 Internal Server Error
+
+## Architecture
+The backend is built using Next.js API routes.  
+Prisma ORM is used for database operations and SQLite is used as the database.  
+JWT is used for authentication and role-based authorization is implemented for access control.
