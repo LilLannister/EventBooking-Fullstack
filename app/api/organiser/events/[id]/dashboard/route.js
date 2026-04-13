@@ -22,10 +22,7 @@ export async function GET(request,{params}){
 
         const {id} = await params //extracting event id from url
 
-        await prisma.booking.deleteMany({where: { eventId:id}})
-        // first deleting all bookings related to this event .this prevents foreign key constraint error //by ChatGPT
-
-        await prisma.event.delete({where: { id}})// after removing related bookings, delete the event itself
+        await event = prisma.booking.deleteMany({where: { eventId:id}})
 
         if(!event){ //if event is not found
             return Response.json(
