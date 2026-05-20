@@ -14,12 +14,14 @@
   "dependencies": {
     "@prisma/adapter-libsql": "^7.5.0",
     "@prisma/client": "^5.22.0",
+    "@tailwindcss/postcss": "^4.3.0",
     "bcryptjs": "^3.0.3",
     "jsonwebtoken": "^9.0.3",
     "next": "16.2.1",
     "prisma": "^5.22.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "eslint": "^9",
