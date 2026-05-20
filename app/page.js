@@ -1,66 +1,39 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="min-h-screen bg-slate-50">
+      <section className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 text-center">
+        <p className="mb-4 rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700">
+          Event Booking & Ticketing Platform
+        </p>
+
+        <h1 className="max-w-3xl text-4xl font-bold tracking-tight text-slate-900 md:text-6xl">
+          Discover events, book tickets, and manage your audience.
+        </h1>
+
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+          A full-stack web application for attendees and organisers, built with
+          Next.js, Prisma, authentication, role-based access control, and
+          responsive UI.
+        </p>
+
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <Link
+            href="/events"
+            className="rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
           >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Browse Events
+          </Link>
+
+          <Link
+            href="/login"
+            className="rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100"
           >
-            Documentation
-          </a>
+            Login
+          </Link>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
