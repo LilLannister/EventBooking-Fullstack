@@ -9,6 +9,37 @@ export default function MyBookingsPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
+async function cancelBooking(bookingId) {
+    const token = getToken();
+
+    if (!token) {
+        setError("Please login first.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/bookings/${bookingId}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+        setError(data.message || "Failed to cancel booking.");
+        return;
+        }
+
+        setBookings((prev) =>
+        prev.filter((booking) => booking.id !== bookingId)
+        );
+    } catch (error) {
+        setError("Something went wrong.");
+    }
+}
+
   async function fetchBookings() {
     setError("");
 
@@ -109,12 +140,21 @@ export default function MyBookingsPage() {
                     </p>
                   </div>
 
-                  <Link
-                    href={`/events/${booking.event?.id}`}
-                    className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-100"
-                  >
-                    View Event
-                  </Link>
+                  <div className="flex gap-3">
+                    <Link
+                        href={`/events/${booking.event?.id}`}
+                        className="rounded-lg border border-slate-300 px-4 py-2 text-center text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                    >
+                        View Event
+                    </Link>
+
+                    <button
+                        onClick={() => cancelBooking(booking.id)}
+                        className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+                    >
+                        Cancel
+                    </button>
+                    </div>
                 </div>
               </article>
             ))}
