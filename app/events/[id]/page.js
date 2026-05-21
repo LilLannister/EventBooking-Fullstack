@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BookTicketButton from "@/components/events/BookTicketButton";
 
 async function getEvent(id) {
   const response = await fetch(`http://localhost:3000/api/events/${id}`, {
@@ -76,9 +77,7 @@ export default async function EventDetailPage({ params }) {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <button className="rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">
-              Book Ticket
-            </button>
+            <BookTicketButton eventId={event.id} />
 
             <Link
               href="/events"
