@@ -64,10 +64,17 @@ export async function POST(request){
             },
             {status:201}
         );
-    } catch(error){ //ChatGPT
-        return Response.json(
-            {success:false, message:"Server error"},
-            {status:500}
-        );
-    }
+    } catch (error) {
+
+  console.error("REGISTER_ERROR:", error);
+
+  return Response.json(
+
+    { success: false, message: "Server error" },
+
+    { status: 500 }
+
+  );
+
+}
 }
