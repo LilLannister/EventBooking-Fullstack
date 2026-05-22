@@ -114,12 +114,28 @@ export default function OrganiserDashboardPage({ params }) {
                         </p>
                     </div>
 
-                    <Link
-                        href="/organiser/events"
-                        className="rounded-lg border border-slate-300 bg-white px-5 py-3 text-center text-sm font-semibold text-slate-700 hover:bg-slate-100"
-                    >
-                        Back to My Events
-                    </Link>
+                    <div className="flex flex-wrap gap-3">
+                        <Link
+                            href={`/organiser/events/${eventId}/edit`}
+                            className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+                        >
+                            Edit Event
+                        </Link>
+
+                        <Link
+                            href={`/events/${eventId}`}
+                            className="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                        >
+                            View Public Page
+                        </Link>
+
+                        <Link
+                            href="/organiser/events"
+                            className="rounded-xl border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                        >
+                            Back to My Events
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-4">
