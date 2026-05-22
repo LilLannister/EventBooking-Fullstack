@@ -1,6 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getUser } from "@/lib/frontend/auth";
 
 export default function Home() {
+  const [user, setUser] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setUser(getUser());
+    setMounted(true);
+  }, []);
+  
   return (
     <main className="min-h-screen bg-slate-50">
       <section className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 text-center">
@@ -18,20 +30,42 @@ export default function Home() {
           responsive UI.
         </p>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-          <Link
-            href="/events"
-            className="rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700"
-          >
-            Browse Events
-          </Link>
+        <div className="mt-10 flex justify-center gap-4">
+          {!user && (
+            <>
+              <Link href="/events" className="rounded-lg bg-blue-600 px-7 py-3 font-semibold text-white hover:bg-blue-700">
+                Browse Events
+              </Link>
 
-          <Link
-            href="/login"
-            className="rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-100"
-          >
-            Login
-          </Link>
+              <Link href="/login" className="rounded-lg border border-slate-300 bg-white px-7 py-3 font-semibold text-slate-700 hover:bg-slate-100">
+                Login
+              </Link>
+            </>
+          )}
+
+          {user?.role === "ATTENDEE" && (
+            <>
+              <Link href="/events" className="rounded-lg bg-blue-600 px-7 py-3 font-semibold text-white hover:bg-blue-700">
+                Browse Events
+              </Link>
+
+              <Link href="/my-bookings" className="rounded-lg border border-slate-300 bg-white px-7 py-3 font-semibold text-slate-700 hover:bg-slate-100">
+                My Bookings
+              </Link>
+            </>
+          )}
+
+          {user?.role === "ORGANISER" && (
+            <>
+              <Link href="/organiser/events" className="rounded-lg bg-blue-600 px-7 py-3 font-semibold text-white hover:bg-blue-700">
+                My Events
+              </Link>
+
+              <Link href="/organiser/events/create" className="rounded-lg border border-slate-300 bg-white px-7 py-3 font-semibold text-slate-700 hover:bg-slate-100">
+                Create Event
+              </Link>
+            </>
+          )}
         </div>
       </section>
     </main>
