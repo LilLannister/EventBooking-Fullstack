@@ -4,19 +4,23 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getUser, logout } from "@/lib/frontend/auth";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
     const router = useRouter();
     const [user, setUser] = useState(null);
+    const pathname = usePathname();
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         function syncUser() {
             setUser(getUser());
         }
         syncUser();
+        setMounted(true);
 
         window.addEventListener("authChange", syncUser);
-        
+
         return () => {
             window.removeEventListener("authChange", syncUser);
         };
@@ -28,6 +32,15 @@ export default function Navbar() {
         router.push("/login");
     }
 
+    function navLinkClass(path) {
+        const isActive =
+            mounted && (pathname === path || pathname.startsWith(`${path}/`));
+
+        return isActive
+            ? "font-semibold text-blue-700"
+            : "text-slate-700 hover:text-blue-700";
+    }
+
     return (
         <header className="border-b border-slate-200 bg-white">
             <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -36,14 +49,14 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex items-center gap-4 text-sm font-medium">
-                    <Link href="/events" className="text-slate-600 hover:text-slate-900">
+                    <Link href="/events" className={navLinkClass("/events")}>
                         Events
                     </Link>
 
                     {user?.role === "ORGANISER" && (
                         <Link
                             href="/organiser/events"
-                            className="text-slate-600 hover:text-slate-900"
+                            className={navLinkClass("/organiser/events")}
                         >
                             My Events
                         </Link>
@@ -52,7 +65,7 @@ export default function Navbar() {
                     {user?.role === "ATTENDEE" && (
                         <Link
                             href="/my-bookings"
-                            className="text-slate-600 hover:text-slate-900"
+                            className={navLinkClass("/my-bookings")}
                         >
                             My Bookings
                         </Link>
@@ -73,10 +86,7 @@ export default function Navbar() {
                         </>
                     ) : (
                         <>
-                            <Link
-                                href="/login"
-                                className="text-slate-600 hover:text-slate-900"
-                            >
+                            <Link href="/login" className={navLinkClass("/login")}>
                                 Login
                             </Link>
 
