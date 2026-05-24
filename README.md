@@ -58,13 +58,7 @@ JWT_SECRET="your_secret_key"
 npx prisma migrate dev
 ```
 
-### 4. Seed the database
-
-```bash
-node prisma/seed.js
-```
-
-### 5. Start the development server
+### 4. Start the development server
 
 ```bash
 npm run dev
