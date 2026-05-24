@@ -1,0 +1,6 @@
+SNG346 Semester Project Repository
+
+GitHub Link:
+https://github.com/LilLannister/EventBooking-Fullstack
+
+Main branch contains the final submitted version of the project.
