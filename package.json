@@ -9,9 +9,6 @@
     "lint": "eslint",
     "postinstall": "prisma generate"
   },
-  "prisma": {
-    "seed": "node prisma/seed.js"
-  },
   "dependencies": {
     "@prisma/adapter-libsql": "^7.5.0",
     "@prisma/client": "^5.22.0",
